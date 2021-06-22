@@ -24,11 +24,6 @@ int main(int argc, char *argv[])
   struct hostent *hp;
   char buffer[256];
   char buf[1024];
-  
-  // if (argc != 3) { 
-  //   printf("Usage: server port\n");
-  //   exit(1);
-  // }
 
   sock= socket(AF_INET, SOCK_DGRAM, 0);
   if (sock < 0) error("socket");

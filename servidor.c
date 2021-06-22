@@ -23,11 +23,6 @@ int main(int argc, char *argv[])
   struct sockaddr_in from;
   char buffer[256];
   char buf[1024];
-
-  // if (argc < 2) {
-  //   fprintf(stderr, "ERROR, no port provided\n");
-  //   exit(0);
-  // }
   
   sock=socket(AF_INET, SOCK_DGRAM, 0);
 
@@ -62,10 +57,6 @@ int main(int argc, char *argv[])
     }else{
       printf("Mensagem enviada...\n");
     }    
-    
-    // n = sendto(sock,"Sua mensagem foi recebida.\n",28,0,(struct sockaddr *)&from,fromlen);
-    // if (n  < 0) 
-    //   error("ERROR: enviar para");
   }
   return 0;
 }
