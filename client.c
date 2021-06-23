@@ -8,6 +8,8 @@
 #include <unistd.h>
 #include <string.h>
 
+#define PORT 10011
+
 void error(const char *msg)
 {
   perror(msg);
@@ -21,22 +23,18 @@ int main(int argc, char *argv[])
   struct sockaddr_in server, from;
   struct hostent *hp;
   char buffer[256];
-  
-  if (argc != 3) { 
-    printf("Usage: server port\n");
-    exit(1);
-  }
+
 
   sock= socket(AF_INET, SOCK_DGRAM, 0);
   if (sock < 0) error("socket");
 
   server.sin_family = AF_INET;
-  hp = gethostbyname(argv[1]);
+  hp = gethostbyname("127.0.0.1");
   if (hp==0) 
     error("Unknown host");
 
   bcopy((char *)hp->h_addr, (char *)&server.sin_addr, hp->h_length);
-  server.sin_port = htons(atoi(argv[2]));
+  server.sin_port = htons(PORT);
   length=sizeof(struct sockaddr_in);
   
   while (1) {
