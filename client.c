@@ -18,12 +18,11 @@ void error(const char *msg)
 
 int main(int argc, char *argv[])
 {
-  int sock, n;
+  int sock, n, m;
   unsigned int length;
   struct sockaddr_in server, from;
   struct hostent *hp;
   char buffer[256];
-
 
   sock= socket(AF_INET, SOCK_DGRAM, 0);
   if (sock < 0) error("socket");
@@ -34,7 +33,7 @@ int main(int argc, char *argv[])
     error("Unknown host");
 
   bcopy((char *)hp->h_addr, (char *)&server.sin_addr, hp->h_length);
-  server.sin_port = htons(PORT);
+  server.sin_port = htons( PORT );
   length=sizeof(struct sockaddr_in);
   
   while (1) {
@@ -43,15 +42,16 @@ int main(int argc, char *argv[])
     fgets(buffer,255,stdin);
     
     n=sendto(sock,buffer,strlen(buffer),0,(const struct sockaddr *)&server,length);
-    if (n < 0) 
+    if (n < 0) {
       error("ERROR: enviar para");
-    
-    n = recvfrom(sock,buffer,256,0,(struct sockaddr *)&from, &length);
-    if (n < 0) 
-      error("ERROR: Receber de");
+    }else{
+      printf("Mensagem enviada...\n");
+    } 
 
-    write(1,"Resp. serivdor: ",16);
-    write(1,buffer,n);
+    m = recvfrom(sock,buffer,256,0,(struct sockaddr *)&from, &length);
+    if (m < 0) 
+      error("ERROR: Receber de");
+    write(1,buffer,m);
   }
   close(sock);
   return 0;
